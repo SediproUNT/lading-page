@@ -1,0 +1,29 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import NavInfo from '../components/NavInfo.astro';
+import Carousel from '../components/Carousel.astro';
+
+// Fetch data (ejemplo)
+const posts = await fetch('api/posts').then(r => r.json());
+---
+
+<Layout title="Página de Inicio">
+  <NavInfo />
+  <Nav />
+  <Carousel />
+  
+  <section class="bg-light">
+    <div class="container">
+      <!-- Contenido de noticias -->
+      {posts.map((post) => (
+        <div class="swiper-slide">
+          <a class="mil-card news-card" href={`/news/${post.id}`}>
+            <!-- Contenido de la card -->
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,57 @@
+---
+
+import { Mail, Phone, Facebook, Instagram, Youtube, Linkedin } from 'lucide-react';
+
+const contactInfo = [
+  {
+    icon: Mail,
+    href: "mailto:sediprount@unitru.edu.pe",
+    text: "sediprount@unitru.edu.pe"
+  },
+  {
+    icon: Phone,
+    href: "tel:+51970153565",
+    text: "+51 970 153 565"
+  }
+];
+
+const socialIcons = [
+  { href: "https://www.facebook.com/SediproUNT", icon: Facebook },
+  { href: "https://www.instagram.com/sediprount/", icon: Instagram },
+  { href: "https://www.youtube.com/@SEDIPROUNT", icon: Youtube },
+  { href: "https://www.linkedin.com/company/sediprount/", icon: Linkedin },
+];
+---
+
+<nav class="hidden lg:block bg-[#212934] text-white py-2">
+  <div class="container mx-auto px-4">
+    <div class="w-full flex justify-between items-center">
+      <div class="flex items-center gap-6">
+        {contactInfo.map(({ icon: Icon, href, text }) => (
+          <div class="flex items-center group">
+            <Icon class="w-4 h-4 mx-3" />
+            
+              href={href}
+              class="text-sm hover:text-gray-300 transition-colors duration-200"
+            >
+              {text}
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex items-center gap-4">
+        {socialIcons.map(({ href, icon: Icon }) => (
+          
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-gray-300 transition-colors duration-200"
+          >
+            <Icon class="w-4 h-4" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>

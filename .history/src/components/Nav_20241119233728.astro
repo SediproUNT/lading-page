@@ -1,0 +1,86 @@
+---
+const menuItems = [
+  { href: "/", text: "Inicio" },
+  { href: "/nosotros", text: "Nosotros" },
+  { href: "/news", text: "Noticias" },
+  { href: "/contacto", text: "Contacto" },
+];
+---
+
+<nav class="bg-white shadow-md">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center py-4">
+      <a href="/" class="flex-shrink-0">
+        <img
+          src="/assets/img/logo-sedipro.png"
+          alt="Logo-SediproUNT"
+          class="h-12 w-auto"
+        />
+      </a>
+
+      <button
+        class="lg:hidden p-2 rounded-md hover:bg-gray-100"
+        id="menuButton"
+        aria-label="Menu"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M4 6h16M4 12h16m-16 6h16"></path>
+        </svg>
+      </button>
+
+      <div class="hidden lg:flex items-center space-x-8">
+        {
+          menuItems.map((item) => (
+            <a
+              href={item.href}
+              class="text-gray-700 hover:text-blue-600 transition-colors duration-200"
+            >
+              {item.text}
+            </a>
+          ))
+        }
+
+        <a
+          href="/login"
+          class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200"
+        >
+          Login
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="lg:hidden hidden" id="mobileMenu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {
+        menuItems.map((item) => (
+          <a
+            href={item.href}
+            class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+          >
+            {item.text}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<script>
+  const menuButton = document.getElementById("menuButton");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuButton?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
+  });
+</script>

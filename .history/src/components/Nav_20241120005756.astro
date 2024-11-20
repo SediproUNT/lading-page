@@ -1,0 +1,107 @@
+---
+const menuItems = [
+  { href: "/", text: "Inicio" },
+  { href: "/nosotros", text: "Nosotros" },
+  { href: "/noticias", text: "Noticias" },
+  { href: "/contacto", text: "Contacto" },
+];
+---
+
+<nav class="bg-white border-b">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <a href="/" class="flex-shrink-0">
+        <img
+          src="/assets/img/logo-sedipro.png"
+          alt="Logo SEDIPRO UNT"
+          class="h-14 w-auto"
+        />
+      </a>
+
+      <!-- Botón menú móvil -->
+      <button
+        class="lg:hidden p-2 rounded-md hover:bg-gray-100"
+        id="menuButton"
+        aria-label="Menú"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-16 6h16"
+          />
+        </svg>
+      </button>
+
+      <!-- Menú escritorio -->
+      <div class="hidden lg:flex items-center space-x-8">
+        {
+          menuItems.map((item) => (
+            <a
+              href={item.href}
+              class="text-gray-800 hover:text-[#4154A3] transition-colors duration-200 font-medium"
+            >
+              {item.text}
+            </a>
+          ))
+        }
+
+        <a
+          href="/login"
+          class="px-6 py-2 rounded-full bg-[#4154A3] text-white hover:bg-[#2c3a7c] transition-colors duration-200 flex items-center gap-2"
+        >
+          <span>Login</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="lg:hidden hidden" id="mobileMenu">
+    <div class="px-4 py-3 space-y-2 border-t">
+      {
+        menuItems.map((item) => (
+          <a
+            href={item.href}
+            class="block py-2 text-gray-800 hover:text-[#4154A3] transition-colors duration-200"
+          >
+            {item.text}
+          </a>
+        ))
+      }
+      <a
+        href="/login"
+        class="block py-2 text-[#4154A3] hover:text-[#2c3a7c] transition-colors duration-200 font-medium"
+      >
+        Login
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const menuButton = document.getElementById("menuButton");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuButton?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
+  });
+
+  // Cerrar menú móvil al cambiar el tamaño de la ventana
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) { // 1024px es el breakpoint 'lg' en Tailwind
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+</script>

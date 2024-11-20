@@ -1,0 +1,44 @@
+---
+const socialIcons = [
+  { href: "https://www.facebook.com/SediproUNT", icon: "facebook-f" },
+  { href: "https://www.instagram.com/sediprount/", icon: "instagram" },
+  { href: "https://www.youtube.com/@SEDIPROUNT", icon: "youtube" },
+  { href: "https://www.linkedin.com/company/sediprount/", icon: "linkedin" },
+];
+---
+
+<nav class="hidden lg:block bg-gray-800 text-white py-2">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-6">
+        <div class="flex items-center">
+          <i class="far fa-envelope mr-2"></i>
+          <a href="mailto:sediprount@unitru.edu.pe" class="hover:text-gray-300">
+            sediprount@unitru.edu.pe
+          </a>
+        </div>
+        <div class="flex items-center">
+          <i class="fas fa-phone-alt mr-2"></i>
+          <a href="tel:+51970153565" class="hover:text-gray-300">
+            +51 970 153 565
+          </a>
+        </div>
+      </div>
+
+      <div class="flex space-x-4">
+        {
+          socialIcons.map(({ href, icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-gray-300 transition-colors duration-200"
+            >
+              <i class={`fab fa-${icon} fa-fw`} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</nav>

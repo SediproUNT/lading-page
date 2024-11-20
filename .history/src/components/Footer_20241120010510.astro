@@ -1,0 +1,78 @@
+---
+const currentYear = new Date().getFullYear();
+
+const socialIcons = [
+  { href: "https://www.facebook.com/SediproUNT", icon: "facebook-f" },
+  { href: "https://www.instagram.com/sediprount/", icon: "instagram" },
+  { href: "https://www.youtube.com/@SEDIPROUNT", icon: "youtube" },
+  { href: "https://www.linkedin.com/company/sediprount/", icon: "linkedin-in" }
+];
+---
+
+<footer class="bg-gradient-to-r from-[#4154A3] to-[#282d5f] text-white py-16">
+  <div class="container mx-auto px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Logo -->
+      <div class="flex flex-col items-center md:items-start">
+        <img
+          src="/assets/img/logo-sedipro-dark.png"
+          alt="Logo SEDIPRO"
+          class="h-20 w-auto object-contain"
+        />
+      </div>
+
+      <!-- Dirección y Contacto -->
+      <div class="text-center md:text-left space-y-6">
+        <div class="space-y-3">
+          <h2 class="text-xl font-semibold">Dirección:</h2>
+          <p class="flex items-center justify-center md:justify-start gap-2 text-gray-200">
+            <i class="fas fa-map-marker-alt"></i>
+            123 Consectetur at ligula 10660
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h2 class="text-xl font-semibold">Contacto:</h2>
+          <div class="space-y-2">
+            <a 
+              href="tel:+51970153565"
+              class="flex items-center justify-center md:justify-start gap-2 text-gray-200 hover:text-white transition-colors duration-200"
+            >
+              <i class="fas fa-phone-alt"></i>
+              +51 970 153 565
+            </a>
+            <a 
+              href="mailto:sedipro@unitru.edu.pe"
+              class="flex items-center justify-center md:justify-start gap-2 text-gray-200 hover:text-white transition-colors duration-200"
+            >
+              <i class="far fa-envelope"></i>
+              sedipro@unitru.edu.pe
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Redes Sociales -->
+      <div class="text-center md:text-left">
+        <h2 class="text-xl font-semibold mb-6">Síguenos en:</h2>
+        <div class="flex justify-center md:justify-start space-x-6">
+          {socialIcons.map(({ href, icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-gray-300 transition-colors duration-200"
+            >
+              <i class={`fab fa-${icon} fa-lg`}></i>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-12 pt-8 text-center border-t border-white/20">
+      <p class="text-gray-200">Copyright © {currentYear} SEDIPRO UNT</p>
+    </div>
+  </div>
+</footer>

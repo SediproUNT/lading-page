@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="row content-img position-relative">
+                <Image 
+                    src="/assets/img/banner4.jpeg" 
+                    alt="Banner 4"
+                    width={1920}
+                    height={1080}
+                    class="img-fluid"
+                />
+                <div class="carousel-content">
+                    <h1 class="h1">Bienvenido a SEDIPRO UNT</h1>
+                    <p>Una de las razones principales de estar en Sedipro, es que en cada proyecto siempre intentamos hacerlo con una sonrisa. ¡Pero esta vez, queremos compartir esa sonrisa contigo!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repite para los otros slides -->
+    </div>
+
+    <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+    <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+    </a>
+</div>
+
+<style>
+    .carousel-item .content-img {
+        position: relative;
+    }
+
+    .carousel-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        max-width: 80%;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    // Importar Bootstrap JS si es necesario
+    import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+</script>

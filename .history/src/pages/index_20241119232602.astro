@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import NavInfo from '../components/NavInfo.astro';
+import Carousel from '../components/Carousel.astro';
+
+// Definir interfaz para Post
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  image?: string;
+  // Añade más propiedades según necesites
+}
+
+// Tipar el fetch
+const posts: Post[] = await fetch('api/posts').then(r => r.json());
+---
+
+<Layout title="Página de Inicio">
+  <NavInfo />
+  <Nav />
+  <Carousel />
+  
+  <section class="bg-light">
+    <div class="container">
+      {posts.map((post: Post) => (
+        <div class="swiper-slide">
+          <a class="mil-card news-card" href={`/news/${post.id}`}>
+            <!-- Contenido de la card -->
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
