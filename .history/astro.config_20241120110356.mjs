@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
     integrations: [
-        tailwind()
+         tailwind()
     ],
     image: {
         // Configuración opcional de imágenes
