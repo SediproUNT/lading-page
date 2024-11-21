@@ -2,21 +2,24 @@
 const slides = [
   {
     // image: "/assets/img/banner4.jpeg",
-    image: "https://lh3.googleusercontent.com/d/1v9q6UbXm03bnRD0il_VBvLtEUgjE5UQN"
+    image:
+      "https://lh3.googleusercontent.com/d/1v9q6UbXm03bnRD0il_VBvLtEUgjE5UQN",
   },
   {
     // image: "/assets/img/banner3.jpeg",
-    image: "https://lh3.googleusercontent.com/d/1MdLHwjYRmhni_eEl3xDqGVOP2a8fiS9F"
+    image:
+      "https://lh3.googleusercontent.com/d/1MdLHwjYRmhni_eEl3xDqGVOP2a8fiS9F",
   },
   {
     // image: "/assets/img/banner1.jpg",
-    image: "https://lh3.googleusercontent.com/d/169fzU-eh-CuhEqGPiW33_CsrYU11hhLb"
+    image:
+      "https://lh3.googleusercontent.com/d/169fzU-eh-CuhEqGPiW33_CsrYU11hhLb",
   },
 ];
 ---
 
 <div class="relative w-full h-[600px] overflow-hidden" id="carousel">
-  <!-- Texto fijo con nuevo filtro más oscuro -->
+  <!-- Texto fijo con filtro oscuro -->
   <div
     class="absolute inset-0 bg-[#282d5f]/80 flex items-center justify-center z-10"
   >
@@ -38,7 +41,7 @@ const slides = [
       id="carouselSlides"
       style="transform: translateX(-100%)"
     >
-      <!-- Clon del último slide para transición infinita -->
+      <!-- Clon del último slide -->
       <div class="w-full h-full flex-none">
         <img
           src={slides[slides.length - 1].image}
@@ -58,7 +61,7 @@ const slides = [
           </div>
         ))
       }
-      <!-- Clon del primer slide para transición infinita -->
+      <!-- Clon del primer slide -->
       <div class="w-full h-full flex-none">
         <img
           src={slides[0].image}
@@ -85,58 +88,74 @@ const slides = [
 </div>
 
 <script>
-  const carouselSlides = document.getElementById(
-    "carouselSlides"
-  ) as HTMLElement | null;
-  const indicators = document.querySelectorAll(".indicator");
+  class Carousel {
+    private carouselSlides: HTMLElement;
+    private indicators: NodeListOf<Element>;
+    private slideCount: number;
+    private currentSlide: number;
 
-  if (!carouselSlides) {
-    console.error('No se encontró el elemento con id "carouselSlides".');
-    throw new Error('El elemento con id "carouselSlides" no existe en el DOM.');
-  }
+    constructor() {
+      const slides = document.getElementById("carouselSlides");
+      if (!slides) {
+        throw new Error('Elemento "carouselSlides" no encontrado');
+      }
 
-  const slideCount = indicators.length;
-  let currentSlide = 1; // Empezamos en el primer slide real (después del clon del último)
+      this.carouselSlides = slides;
+      this.indicators = document.querySelectorAll(".indicator");
+      this.slideCount = this.indicators.length;
+      this.currentSlide = 1;
 
-  function updateCarousel() {
-    if (carouselSlides) {
-      carouselSlides.style.transition = "transform 3000ms ease-in-out";
-      carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
+      this.init();
     }
 
-    // Actualizar indicadores
-    indicators.forEach((indicator, index) => {
-      indicator.classList.toggle("bg-white", index === currentSlide - 1);
-      indicator.classList.toggle("bg-white/50", index !== currentSlide - 1);
-    });
-  }
+    private updateCarousel(): void {
+      this.carouselSlides.style.transition = "transform 3000ms ease-in-out";
+      this.carouselSlides.style.transform = `translateX(-${this.currentSlide * 100}%)`;
 
-  function resetCarousel() {
-    // Sin transición, "saltamos" al inicio o al final según corresponda
-    if (carouselSlides) {
-      carouselSlides.style.transition = "none";
-      if (currentSlide === 0) {
-        currentSlide = slideCount; // Saltar al último slide real
-      } else if (currentSlide === slideCount + 1) {
-        currentSlide = 1; // Saltar al primer slide real
+      this.indicators.forEach((indicator, index) => {
+        indicator.classList.toggle("bg-white", index === this.currentSlide - 1);
+        indicator.classList.toggle(
+          "bg-white/50",
+          index !== this.currentSlide - 1
+        );
+      });
+    }
+
+    private resetCarousel(): void {
+      this.carouselSlides.style.transition = "none";
+      if (this.currentSlide === 0) {
+        this.currentSlide = this.slideCount;
+      } else if (this.currentSlide === this.slideCount + 1) {
+        this.currentSlide = 1;
       }
-      carouselSlides.style.transform = `translateX(-${currentSlide * 100}%)`;
+      this.carouselSlides.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+    }
+
+    private init(): void {
+      setInterval(() => {
+        this.currentSlide++;
+        this.updateCarousel();
+
+        setTimeout(() => {
+          if (
+            this.currentSlide === 0 ||
+            this.currentSlide === this.slideCount + 1
+          ) {
+            this.resetCarousel();
+          }
+        }, 3000);
+      }, 5000);
+
+      this.updateCarousel();
     }
   }
 
-  // Auto-play
-  setInterval(() => {
-    currentSlide++;
-    updateCarousel();
-
-    // Resetear el carrusel si llega a los clones
-    setTimeout(() => {
-      if (currentSlide === 0 || currentSlide === slideCount + 1) {
-        resetCarousel();
-      }
-    }, 3000); // Esperar a que termine la transición
-  }, 5000);
-
-  // Inicializar posición
-  updateCarousel();
+  // Iniciar el carrusel cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      new Carousel();
+    } catch (error) {
+      console.error("Error al inicializar el carrusel:", error);
+    }
+  });
 </script>
