@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.2.0",
     "astro": "^4.16.13",
     "lucide-react": "^0.460.0",
+    "swiper": "^11.1.15",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3"
   }

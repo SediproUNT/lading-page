@@ -13,8 +13,9 @@ const posts: Post[] = mockPosts;
   <Nav />
   <Carousel />
 
-  <section class="bg-gray-100">
+  <!-- <section class="bg-gray-100">
     <div class="container mx-auto px-4 py-12">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8"> Eventos </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
           posts.map((post: Post) => (
@@ -54,7 +55,121 @@ const posts: Post[] = mockPosts;
         }
       </div>
     </div>
+  </section> -->
+  <section class="bg-gray-100">
+    <div class="container mx-auto px-4 py-14">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Eventos</h2>
+      
+      <!-- Slider container -->
+      <div class="relative overflow-hidden">
+        <!-- Slider (using flexbox for the sliding effect) -->
+        <div class="flex transition-transform duration-300 ease-in-out" id="slider">
+          {posts.map((post: Post, index: number) => (
+            <article class="flex-none bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 w-80 mx-2">
+              <div class="relative h-48">
+                {post.image && (
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    class="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-1">
+                  {post.title}
+                </h2>
+                <p class="text-gray-600 mb-4">
+                  {post.content.substring(0, 150)}...
+                </p>
+                <div class="flex justify-between items-center">
+                  {post.date && (
+                    <span class="text-sm text-gray-500">
+                      {new Date(post.date).toLocaleDateString()}
+                    </span>
+                  )}
+                  <a
+                    href={`/news/${post.id}`}
+                    class="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Leer más
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+
+          <!-- Duplicamos las tarjetas para crear el efecto infinito -->
+          {posts.map((post: Post, index: number) => (
+            <article class="flex-none bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 w-80 mx-4">
+              <div class="relative h-48">
+                {post.image && (
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    class="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">
+                  {post.title}
+                </h2>
+                <p class="text-gray-600 mb-4">
+                  {post.content.substring(0, 150)}...
+                </p>
+                <div class="flex justify-between items-center">
+                  {post.date && (
+                    <span class="text-sm text-gray-500">
+                      {new Date(post.date).toLocaleDateString()}
+                    </span>
+                  )}
+                  <a
+                    href={`/news/${post.id}`}
+                    class="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Leer más
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
   </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.getElementById('slider');
+      if (slider) {
+        const postsLength = slider.children.length / 2;
+        const itemWidth = 320 + 16; // Ajusta esto al tamaño de tus tarjetas (w-80) + margen (mx-4)
+        let index = 0;
+
+        // Función para mover el slider
+        const moveSlider = () => {
+          index = (index + 1) % postsLength; // Si llegamos al final de la primera parte, volvemos al principio
+          slider.style.transform = `translateX(-${index * itemWidth}px)`;
+
+          // Cuando lleguemos al final del slider original, volvemos al principio sin saltos
+          if (index === postsLength) {
+            setTimeout(() => {
+              slider.style.transition = 'none'; // Sin transición al reiniciar
+              slider.style.transform = `translateX(100)`; // Volver al principio
+              index = 0;
+            }, 300); // Tiempo de espera para que no se vea el salto
+          } else {
+            slider.style.transition = 'transform 0.3s ease-in-out'; // Añadimos transición después del reinicio
+          }
+        };
+
+        // Mover el slider cada 3 segundos
+        setInterval(moveSlider, 3000); // 3000ms = 3 segundos
+      }
+    });
+  </script>
+
 
   <section class="bg-white py-12">
     <div class="container mx-auto px-4">
@@ -76,5 +191,229 @@ const posts: Post[] = mockPosts;
         </div>
       </div>
     </div>
+  </section>
+
+  <section style="font-family: Arial, sans-serif; background-color: #6d08a7;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  min-height: 50vh;
+                  text-align: center;">
+    <div class="contenedor" style="background: #fff;
+                                    padding: 20px 40px;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    max-width: 800px;
+                                    width: 100%;">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Sección Estudiantil de Dirección de Proyectos de la Universidad Nacional de Trujillo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <h2>Miembros Activos</h2>
+          <div class="text-5xl font-bold text-blue-600 mb-3" id="contadorMiembros">0</div>
+        </div>
+        <div class="text-center">
+          <h2>Áreas Funcionales</h2>
+          <div class="text-5xl font-bold text-blue-600 mb-3" id="contadorAreas">0</div>
+        </div>
+        <div class="text-center">
+          <h2>Carreras Diferentes</h2>
+          <div class="text-5xl font-bold text-blue-600 mb-3" id="contadorCarreras">0</div>
+        </div>
+      </div>
+    </div>
+    <script>
+    const contadorMiembros = document.getElementById("contadorMiembros");
+    const contadorAreas = document.getElementById("contadorAreas");
+    const contadorCarreras = document.getElementById("contadorCarreras");
+
+    const objetivos = {
+      miembros: 85,   // Miembros Activos
+      areas: 5,       // Áreas Funcionales
+      carreras: 16    // Carreras Diferentes
+    };
+
+    const velocidades = {
+      miembros: 25,
+      areas: 100,
+      carreras: 70
+    };
+
+    // Función genérica para actualizar contadores
+    function actualizarContador(elemento: HTMLElement, objetivo: number, velocidad: number, contadorActual: number = 0) {
+      if (contadorActual < objetivo) {
+      // Convierte el número a cadena antes de asignarlo a textContent
+        elemento.textContent = (contadorActual + 1).toString();
+        setTimeout(() => actualizarContador(elemento, objetivo, velocidad, contadorActual + 1), velocidad);
+      }
+    }
+
+    // Iniciar animaciones
+    if (contadorMiembros && contadorAreas && contadorCarreras) {
+        actualizarContador(contadorMiembros, objetivos.miembros, velocidades.miembros);
+        actualizarContador(contadorAreas, objetivos.areas, velocidades.areas);
+        actualizarContador(contadorCarreras, objetivos.carreras, velocidades.carreras);
+      }
+    </script>
+  </section>
+
+  <!-- DIRECTIVA -->
+  <section style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;">
+    <style>
+    .container-directiva {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .central-circle {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSomtOE2mnYCYN-DUPGx9aery_7utiRNMXqQ&s');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(2, 47, 226, 0.2);
+    z-index: 1;
+}
+
+  
+  .outer-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .photo {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgb(142, 53, 201);
+    cursor: pointer;
+    border: 2.5px solid purple; 
+  }
+  
+  /* Tooltip básico */
+  .photo::after {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background-color: #333;
+    border-radius: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Flecha del tooltip */
+  .photo::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Mostrar tooltip al pasar el cursor */
+  .photo:hover::after,
+  .photo:hover::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Distribución en círculo alrededor del central */
+  .photo:nth-child(1) { transform: rotate(335.4deg) translate(0, -190px) rotate(-335.4deg); z-index: 3; }
+  .photo:nth-child(2) { transform: rotate(26.4deg) translate(0, -190px) rotate(-26.4deg); z-index: 2;  }
+  .photo:nth-child(3) { transform: rotate(77.8deg) translate(0, -190px) rotate(-77.8deg); z-index: 1;  }
+  .photo:nth-child(4) { transform: rotate(129.2deg) translate(0, -190px) rotate(-129.2deg); }
+  .photo:nth-child(5) { transform: rotate(180.6deg) translate(0, -190px) rotate(-180.6deg); }
+  .photo:nth-child(6) { transform: rotate(232deg) translate(0, -190px) rotate(-232deg); }
+  .photo:nth-child(7) { transform: rotate(283.4deg) translate(0, -190px) rotate(-283.4deg); }
+  
+.tooltip {
+    position: absolute;
+    background-color: #6c23b9;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 3;
+  }
+  
+  .photo:hover .tooltip {
+    display: block;
+    top: 110%; /* Coloca el tooltip justo debajo de la foto */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .role {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+  .name {
+    font-size: 16px;
+    color: white;
+}
+    </style>
+
+    <div class="container-directiva">
+      <div class="central-circle"></div>
+      <div class="outer-circle">
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Presidenta</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Vicepresidenta</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Director de Marketing</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Director de PMO</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Director(a) de Gestión del Talento Humano</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Director(a) de Logística y Finanzas</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+        <div class="photo" style="background-image: url('https://t4.ftcdn.net/jpg/01/23/09/33/360_F_123093367_c7WoJ0uHCkepbgLasnGFBKK8sSNiJw6l.jpg');">
+          <div class="tooltip"><span class="role">Director(a) de TI</span><br><span class="name">Nombre y Apellido</span></div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </Layout>
