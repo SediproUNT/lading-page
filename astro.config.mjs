@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
     site: "https://sediprount.github.io/",
-    base: "lading-page"
+    base: "lading-page",
 
 
     integrations: [
